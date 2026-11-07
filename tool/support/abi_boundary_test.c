@@ -1,6 +1,6 @@
 // The C ABI test of the built library. tool/kiln/test_build.dart runs it
-// after a release build, and tool/test_android_artifact.sh and
-// tool/test_ios_simulator_artifact.sh run it on a device. It is built with
+// after a release build, and tool/support/test_android_artifact.sh and
+// tool/support/test_ios_simulator_artifact.sh run it on a device. It is built with
 // -Werror against src/lame_shim.h and runs beside the library.
 #include <math.h>
 #include <stdio.h>

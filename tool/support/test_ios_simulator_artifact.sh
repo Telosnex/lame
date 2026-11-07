@@ -3,9 +3,9 @@
 # Simulator library.
 # The library in build/native_artifacts/<target>/ is a local build of
 # tool/build_native_artifact.sh, or else the released file
-# (tool/prebuilt_artifacts.dart downloads it).
+# (tool/support/prebuilt_artifacts.dart downloads it).
 set -euo pipefail
-root="$(cd "$(dirname "$0")/.." && pwd)"
+root="$(cd "$(dirname "$0")/../.." && pwd)"
 [[ "$(uname -s)" == Darwin ]] || { echo 'Requires macOS/Xcode.' >&2; exit 1; }
 
 case "$(uname -m)" in
@@ -14,7 +14,7 @@ case "$(uname -m)" in
   *) echo "Unsupported host architecture: $(uname -m)" >&2; exit 1 ;;
 esac
 artifact="$root/build/native_artifacts/$target/liblame.dylib"
-[[ -f "$artifact" ]] || (cd "$root" && dart run tool/prebuilt_artifacts.dart "$target")
+[[ -f "$artifact" ]] || (cd "$root" && dart run tool/support/prebuilt_artifacts.dart "$target")
 
 devices_json="$(xcrun simctl list devices available -j)"
 read -r udid initial_state < <(python3 -c '

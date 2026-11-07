@@ -4,9 +4,9 @@
 # an AVD.
 # The library in build/native_artifacts/<target>/ is a local build of
 # tool/build_native_artifact.sh, or else the released file
-# (tool/prebuilt_artifacts.dart downloads it).
+# (tool/support/prebuilt_artifacts.dart downloads it).
 set -euo pipefail
-root="$(cd "$(dirname "$0")/.." && pwd)"
+root="$(cd "$(dirname "$0")/../.." && pwd)"
 sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-$HOME/Library/Android/sdk}}"
 adb="$sdk/platform-tools/adb"
 emulator="$sdk/emulator/emulator"
@@ -47,7 +47,7 @@ esac
 case "$(uname -s)" in Darwin) host=darwin-x86_64 ;; Linux) host=linux-x86_64 ;; *) exit 1 ;; esac
 cc="$ndk/toolchains/llvm/prebuilt/$host/bin/$compiler"
 artifact="$root/build/native_artifacts/$target/liblame.so"
-[[ -f "$artifact" ]] || (cd "$root" && dart run tool/prebuilt_artifacts.dart "$target")
+[[ -f "$artifact" ]] || (cd "$root" && dart run tool/support/prebuilt_artifacts.dart "$target")
 build="$root/build/android-device-boundary"
 rm -rf "$build" && mkdir -p "$build"
 "$cc" -std=c11 -O2 -Wall -Wextra -Werror -I"$root/src" \

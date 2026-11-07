@@ -4,12 +4,12 @@ import 'package:kiln/kiln.dart';
 
 /// Downloads the released libraries of the given targets (default: all) into
 /// `build/native_artifacts/<target>/`, after a check of their SHA-256. The
-/// tool/test_*_artifact*.sh scripts test the files there.
+/// tool/support/test_*_artifact*.sh scripts test the files there.
 ///
 /// tool/build_native_artifact.sh writes a local build to the same place.
 /// This command replaces such a file with the released one.
 Future<void> main(List<String> targets) async {
-  final root = File.fromUri(Platform.script).parent.parent.uri;
+  final root = File.fromUri(Platform.script).parent.parent.parent.uri;
   final manifest = await PrebuiltManifest.load(root);
   if (manifest == null) {
     stderr.writeln('error: $manifestPath is missing. Run the native release.');

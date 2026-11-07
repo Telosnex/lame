@@ -130,8 +130,8 @@ jobs:
       - uses: Telosnex/telosnex_ci_tools/actions/ios-simulator-boot@4a798518378fb0c362ebe42940227560e6b4ecde # v0.5.8
       # The script writes no log file: tee keeps its output for the upload.
       # bash (the workflow default) runs with pipefail, so a failure stays one.
-      - name: Simulator test (tool/test_ios_simulator_artifact.sh)
-        run: tool/test_ios_simulator_artifact.sh 2>&1 | tee "$RUNNER_TEMP/ios-simulator-test.log"
+      - name: Simulator test (tool/support/test_ios_simulator_artifact.sh)
+        run: tool/support/test_ios_simulator_artifact.sh 2>&1 | tee "$RUNNER_TEMP/ios-simulator-test.log"
       - name: Upload the simulator logs
         if: failure() || cancelled()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -154,7 +154,7 @@ jobs:
         uses: Telosnex/telosnex_ci_tools/actions/android-emulator@4a798518378fb0c362ebe42940227560e6b4ecde # v0.5.8
         with:
           api-level: '36'
-      - run: tool/test_android_artifact.sh
+      - run: tool/support/test_android_artifact.sh
       - name: Upload the emulator logs
         if: failure() || cancelled()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
