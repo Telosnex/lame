@@ -1,0 +1,10 @@
+# Files that the native and web builds do not read (kiln ADR 001 D3). The
+# builds read hook/, src/, pubspec.yaml, native_artifacts/sources.json,
+# tool/build_native_artifact.sh, tool/fetch_native_sources.sh, the toolchain
+# scripts and tool/kiln/build_web.dart (kiln ADR 002 D5).
+analysis_options.yaml
+ffigen.yaml
+third_party/
+tool/support/
+tool/kiln/test_build.dart
+tool/kiln/test_web.dart

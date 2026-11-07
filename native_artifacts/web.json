@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "webVersion": "73526cc51f98b9f1",
+  "files": [
+    {
+      "name": "lame_ffi_worker.mjs",
+      "sha256": "e14a50c1e15c065e7f1cebee0d3c3bea7e206c43d66dba339354111bd6731f60",
+      "bytes": 3547,
+      "source": "lib/web/lame_ffi_worker.mjs"
+    }
+  ]
+}

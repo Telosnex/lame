@@ -1,0 +1,29 @@
+name: lame_ffi
+description: >-
+  MP3 encoding with LAME 3.100, the same on every platform. Native through
+  FFI, web through WebAssembly. CBR, VBR and ABR, mono or stereo.
+version: 0.1.0
+repository: https://github.com/Telosnex/lame_ffi
+issue_tracker: https://github.com/Telosnex/lame_ffi/issues
+
+environment:
+  sdk: ^3.12.2
+
+topics:
+  - mp3
+  - audio
+  - ffi
+  - webassembly
+  - native-assets
+
+dependencies:
+  code_assets: ^2.2.0
+  ffi: ^2.1.4
+  hooks: ^2.2.0
+  kiln: ^1.0.0
+
+dev_dependencies:
+  crypto: ^3.0.6
+  ffigen: ^20.1.1
+  lints: ^6.0.0
+  test: ^1.28.0

@@ -1,0 +1,9 @@
+LIBRARY lame_ffi
+EXPORTS
+  lame_ffi_abi_version
+  lame_ffi_build_info
+  lame_ffi_encode_pcm16
+  lame_ffi_buffer_data
+  lame_ffi_buffer_length
+  lame_ffi_buffer_release
+  lame_ffi_error_message

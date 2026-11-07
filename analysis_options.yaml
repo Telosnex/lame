@@ -1,0 +1,6 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - lib/lame_ffi_bindings_generated.dart
+    - build/**
