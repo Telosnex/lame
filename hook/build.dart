@@ -1,4 +1,4 @@
-/// Bundles the lame_ffi library as a Dart code asset.
+/// Bundles the lame library as a Dart code asset.
 ///
 /// With package:kiln (kiln ADR 001), the hook downloads the library from
 /// the GitHub release in native_artifacts/prebuilt.json when the package
@@ -17,7 +17,7 @@ import 'package:code_assets/code_assets.dart';
 import 'package:hooks/hooks.dart';
 import 'package:kiln/kiln.dart';
 
-const _assetName = 'lame_ffi_bindings_generated.dart';
+const _assetName = 'lame_bindings_generated.dart';
 
 /// The NDK of the release builds. A source build uses it if it is installed.
 const _androidNdkVersion = '28.2.13676358';
@@ -47,7 +47,7 @@ void main(List<String> args) async {
     final target = TargetName.of(input.config.code);
     if (!_targets.contains(target.name)) {
       throw UnsupportedError(
-        'lame_ffi has no native library for $target. Supported targets: '
+        'lame has no native library for $target. Supported targets: '
         '${_targets.join(', ')}.',
       );
     }
@@ -59,7 +59,7 @@ void main(List<String> args) async {
   });
 }
 
-void _log(String message) => stderr.writeln('[lame_ffi] $message');
+void _log(String message) => stderr.writeln('[lame] $message');
 
 Future<void> _buildFromSource(
   BuildInput input,
@@ -68,11 +68,11 @@ Future<void> _buildFromSource(
   SourceBuild source,
 ) async {
   final hostProblem = _hostProblem(target);
-  if (hostProblem != null) throw UnsupportedError('lame_ffi: $hostProblem');
+  if (hostProblem != null) throw UnsupportedError('lame: $hostProblem');
 
   final code = input.config.code;
   final library = File.fromUri(
-    input.outputDirectory.resolve(target.os.dylibFileName('lame_ffi')),
+    input.outputDirectory.resolve(target.os.dylibFileName('lame')),
   );
   await Directory.fromUri(input.outputDirectory).create(recursive: true);
   // The unpacked LAME archive stays in the shared directory. Two targets can
@@ -82,17 +82,17 @@ Future<void> _buildFromSource(
   );
   final environment = {
     // The directory of the pinned archive of native_artifacts/sources.json.
-    'LAME_FFI_LAME_SOURCE': (await source.pinnedSource('lame')).path,
-    'LAME_FFI_BUILD_ROOT': buildRoot.toFilePath(),
-    'LAME_FFI_OUTPUT': library.path,
+    'LAME_SHIM_LAME_SOURCE': (await source.pinnedSource('lame')).path,
+    'LAME_SHIM_BUILD_ROOT': buildRoot.toFilePath(),
+    'LAME_SHIM_OUTPUT': library.path,
     if (target.os == OS.macOS)
-      'LAME_FFI_MACOS_VERSION':
+      'LAME_SHIM_MACOS_VERSION':
           '${code.macOS.deploymentVersion.major}.${code.macOS.deploymentVersion.minor}',
     if (target.os == OS.iOS)
-      'LAME_FFI_IOS_VERSION':
+      'LAME_SHIM_IOS_VERSION':
           '${code.iOS.deploymentVersion.major}.${code.iOS.deploymentVersion.minor}',
     if (target.os == OS.android) ...{
-      'LAME_FFI_ANDROID_API': '${code.android.targetNdkApi}',
+      'LAME_SHIM_ANDROID_API': '${code.android.targetNdkApi}',
       'ANDROID_NDK_HOME': _androidNdk(),
     },
   };
@@ -108,8 +108,8 @@ Future<void> _buildFromSource(
   );
 
   for (final path in [
-    'src/lame_ffi.c',
-    'src/lame_ffi.h',
+    'src/lame_shim.c',
+    'src/lame_shim.h',
     'src/lame_config/config.h',
     'src/exports_windows.def',
     'tool/build_native_artifact.sh',
@@ -171,7 +171,7 @@ String _androidNdk() {
     }
   }
   throw StateError(
-    'lame_ffi: no Android NDK found. Install NDK $_androidNdkVersion with '
+    'lame: no Android NDK found. Install NDK $_androidNdkVersion with '
     'the Android SDK manager, or set ANDROID_NDK_HOME.',
   );
 }
@@ -204,7 +204,7 @@ Future<void> _run(
   final exitCode = await process.exitCode;
   if (exitCode != 0) {
     throw StateError(
-      'lame_ffi: ${bashArguments.join(' ')} failed with exit code $exitCode.',
+      'lame: ${bashArguments.join(' ')} failed with exit code $exitCode.',
     );
   }
 }

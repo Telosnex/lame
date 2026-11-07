@@ -3,14 +3,14 @@ library;
 
 import 'dart:typed_data';
 
-import 'package:lame_ffi/lame_ffi.dart';
-import 'package:lame_ffi/src/backend/backend_web.dart';
+import 'package:lame/lame.dart';
+import 'package:lame/src/backend/backend_web.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('the default worker URL is in kiln/lame_ffi/, with the web version', () {
+  test('the default worker URL is in kiln/lame/, with the web version', () {
     final url = resolveWorkerUrl('https://app.example/sub/', null);
-    expect(url.path, '/sub/kiln/lame_ffi/lame_ffi_worker.mjs');
+    expect(url.path, '/sub/kiln/lame/lame_worker.mjs');
     expect(url.queryParameters['v'], isNotEmpty);
     expect(
       resolveWorkerUrl('https://app.example/', Uri.parse('w.mjs?v=x')).query,
@@ -23,13 +23,13 @@ void main() {
   test(
     'a missing worker fails with LameException, then a good one loads',
     () async {
-      LameWeb.workerUri = Uri.base.resolve('packages/lame_ffi/web/missing.mjs');
+      LameWeb.workerUri = Uri.base.resolve('packages/lame/web/missing.mjs');
       await expectLater(
         Lame.encode(Int16List(2), sampleRate: 44100, channels: 1),
         throwsA(isA<LameException>().having((e) => e.status, 'status', -100)),
       );
       LameWeb.workerUri = Uri.base.resolve(
-        'packages/lame_ffi/web/lame_ffi_worker.mjs?v=test',
+        'packages/lame/web/lame_worker.mjs?v=test',
       );
       final mp3 = await Lame.encode(
         Int16List(2),

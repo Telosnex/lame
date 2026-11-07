@@ -1,6 +1,6 @@
 # Builds the native library for every target and the web runtime files, and
 # publishes them as a GitHub release. Telosnex/telosnex_ci_tools has the
-# jobs; tool/kiln/ has the lame_ffi steps:
+# jobs; tool/kiln/ has the lame steps:
 #
 #   prepare.dart     Installs the Linux and Windows toolchains in their
 #                    containers (tool/install_build_toolchain.sh).

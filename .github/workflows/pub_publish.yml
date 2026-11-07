@@ -1,12 +1,12 @@
-# Publishes lame_ffi to pub.dev from a release tag
-# (pub-lame_ffi-v1.2.3), with telosnex_ci_tools' pub_publish.yml. On pub.dev,
+# Publishes lame to pub.dev from a release tag
+# (pub-lame-v1.2.3), with telosnex_ci_tools' pub_publish.yml. On pub.dev,
 # the package's Admin page allows automated publishing from this repository:
-# tag pattern pub-lame_ffi-v{{version}}, environment pub.dev.
+# tag pattern pub-lame-v{{version}}, environment pub.dev.
 name: Pub publish
 
 on:
   push:
-    tags: ['pub-lame_ffi-v[0-9]+.[0-9]+.[0-9]+*']
+    tags: ['pub-lame-v[0-9]+.[0-9]+.[0-9]+*']
 
 permissions:
   contents: read

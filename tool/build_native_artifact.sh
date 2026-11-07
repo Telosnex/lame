@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Builds the lame_ffi library for one target: LAME 3.100's libmp3lame and the
-# shim in src/, as one shared library that exports only the lame_ffi_* ABI.
+# Builds the lame library for one target: LAME 3.100's libmp3lame and the
+# shim in src/, as one shared library that exports only the lame_shim_* ABI.
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
@@ -27,19 +27,19 @@ in the Android SDK). Linux and Windows targets build on Linux, or with
 tool/build_native_linux_docker.sh and tool/build_native_windows_docker.sh.
 
 hook/build.dart runs this script for a source build and sets:
-  LAME_FFI_LAME_SOURCE  the directory of lame_3.100.orig.tar.gz
+  LAME_SHIM_LAME_SOURCE  the directory of lame_3.100.orig.tar.gz
                         (default: third_party, from tool/fetch_native_sources.sh)
-  LAME_FFI_BUILD_ROOT   intermediate files (default: build/native/<target>)
-  LAME_FFI_OUTPUT       the library (default: build/native_artifacts/<target>/<file>)
-  LAME_FFI_MACOS_VERSION, LAME_FFI_IOS_VERSION, LAME_FFI_ANDROID_API
+  LAME_SHIM_BUILD_ROOT   intermediate files (default: build/native/<target>)
+  LAME_SHIM_OUTPUT       the library (default: build/native_artifacts/<target>/<file>)
+  LAME_SHIM_MACOS_VERSION, LAME_SHIM_IOS_VERSION, LAME_SHIM_ANDROID_API
                         minimum OS (defaults: 12.0, 13.0, 24)
 USAGE
   exit 64
 }
 
-lame_source="${LAME_FFI_LAME_SOURCE:-$root/third_party}"
-macos_version="${LAME_FFI_MACOS_VERSION:-12.0}"
-ios_version="${LAME_FFI_IOS_VERSION:-13.0}"
+lame_source="${LAME_SHIM_LAME_SOURCE:-$root/third_party}"
+macos_version="${LAME_SHIM_MACOS_VERSION:-12.0}"
+ios_version="${LAME_SHIM_IOS_VERSION:-13.0}"
 
 os=
 artifact_arch=
@@ -73,15 +73,15 @@ case "$target" in
     strip_tool="$(xcrun --sdk "$sdk" -f strip)"
     cflags+=(-arch "$artifact_arch" "$minimum_flag" -isysroot "$sdk_path")
     ldflags=(-arch "$artifact_arch" "$minimum_flag" -isysroot "$sdk_path")
-    output_name=liblame_ffi.dylib
+    output_name=liblame.dylib
     shared_flags=(
       -dynamiclib -Wl,-dead_strip -Wl,-headerpad_max_install_names
-      -Wl,-install_name,@rpath/liblame_ffi.dylib
+      -Wl,-install_name,@rpath/liblame.dylib
     )
     ;;
   android-arm|android-arm64|android-x64)
     os=android
-    android_api="${LAME_FFI_ANDROID_API:-24}"
+    android_api="${LAME_SHIM_ANDROID_API:-24}"
     ndk="${ANDROID_NDK_HOME:-${ANDROID_NDK_ROOT:-}}"
     if [[ -z "$ndk" ]]; then
       ndk="$HOME/Library/Android/sdk/ndk/28.2.13676358"
@@ -100,8 +100,8 @@ case "$target" in
     esac
     cc="$llvm_bin/${compiler_prefix}${android_api}-clang"
     strip_tool="$llvm_bin/llvm-strip"
-    output_name=liblame_ffi.so
-    shared_flags=(-shared -Wl,-soname,liblame_ffi.so -Wl,-z,max-page-size=16384)
+    output_name=liblame.so
+    shared_flags=(-shared -Wl,-soname,liblame.so -Wl,-z,max-page-size=16384)
     ;;
   linux-arm64|linux-x64)
     os=linux
@@ -118,8 +118,8 @@ case "$target" in
       cc="${CC:-gcc}"
       strip_tool="${STRIP:-strip}"
     fi
-    output_name=liblame_ffi.so
-    shared_flags=(-shared -Wl,-soname,liblame_ffi.so -Wl,-z,relro,-z,now)
+    output_name=liblame.so
+    shared_flags=(-shared -Wl,-soname,liblame.so -Wl,-z,relro,-z,now)
     ;;
   windows-x64|windows-arm64)
     os=windows
@@ -127,7 +127,7 @@ case "$target" in
       echo 'Windows libraries are cross-built on Linux (use tool/build_native_windows_docker.sh).' >&2
       exit 1
     }
-    output_name=lame_ffi.dll
+    output_name=lame.dll
     if [[ "$target" == windows-x64 ]]; then
       artifact_arch=x86_64
       cc="${CC:-x86_64-w64-mingw32-gcc}"
@@ -158,13 +158,13 @@ sha256_of() {
   fi
 }
 
-build_root="${LAME_FFI_BUILD_ROOT:-$root/build/native/$target}"
-artifact="${LAME_FFI_OUTPUT:-$root/build/native_artifacts/$target/$output_name}"
+build_root="${LAME_SHIM_BUILD_ROOT:-$root/build/native/$target}"
+artifact="${LAME_SHIM_OUTPUT:-$root/build/native_artifacts/$target/$output_name}"
 mkdir -p "$build_root" "$(dirname "$artifact")"
 
 # LAME: the pinned release archive, unpacked once per build directory.
 lame="$build_root/lame-$lame_version"
-if [[ ! -f "$lame/.lame_ffi_complete" ]]; then
+if [[ ! -f "$lame/.lame_shim_complete" ]]; then
   archive="$lame_source/$lame_archive"
   [[ -f "$archive" ]] || {
     echo "$archive is missing: run tool/fetch_native_sources.sh" >&2; exit 1;
@@ -177,7 +177,7 @@ if [[ ! -f "$lame/.lame_ffi_complete" ]]; then
   mkdir -p "$lame.partial"
   tar -xzf "$archive" -C "$lame.partial" --strip-components=1
   mv "$lame.partial" "$lame"
-  touch "$lame/.lame_ffi_complete"
+  touch "$lame/.lame_shim_complete"
 fi
 
 # libmp3lame without the decoder interface (no HAVE_MPGLIB) and without the
@@ -187,11 +187,11 @@ for file in "$lame"/libmp3lame/*.c; do
   [[ "$(basename "$file")" == mpglib_interface.c ]] && continue
   sources+=("$file")
 done
-sources+=("$root/src/lame_ffi.c")
+sources+=("$root/src/lame_shim.c")
 
 exports="$build_root/exports.txt"
 if [[ "$os" == macos || "$os" == ios ]]; then prefix=_; else prefix=; fi
-sed -n 's/^  \(lame_ffi_[a-z0-9_]*\)$/\1/p' "$root/src/exports_windows.def" \
+sed -n 's/^  \(lame_shim_[a-z0-9_]*\)$/\1/p' "$root/src/exports_windows.def" \
   | sed "s/^/$prefix/" > "$exports"
 
 export_flags=()
@@ -201,7 +201,7 @@ case "$os" in
   *)
     version_script="$build_root/exports.map"
     {
-      echo 'LAME_FFI_1 {'
+      echo 'LAME_SHIM_1 {'
       echo '  global:'
       sed 's/^/    /; s/$/;/' "$exports"
       echo '  local: *;'
@@ -227,10 +227,10 @@ case "$os" in
     [[ "$actual_arch" == "$artifact_arch" ]] || {
       echo "Wrong architecture: expected $artifact_arch, got $actual_arch" >&2; exit 1;
     }
-    if otool -L "$artifact" | tail -n +2 | grep -v -E '/usr/lib/libSystem|@rpath/liblame_ffi'; then
+    if otool -L "$artifact" | tail -n +2 | grep -v -E '/usr/lib/libSystem|@rpath/liblame'; then
       echo 'The library has a dependency other than libSystem.' >&2; exit 1;
     fi
-    nm -gU "$artifact" | awk '{print $3}' | grep '^_lame_ffi_' | sort > "$actual_exports"
+    nm -gU "$artifact" | awk '{print $3}' | grep '^_lame_shim_' | sort > "$actual_exports"
     ;;
   android|linux)
     if [[ "$os" == android ]]; then
@@ -255,7 +255,7 @@ case "$os" in
       esac
     done
     "$nm_tool" -D --defined-only "$artifact" | awk '{print $3}' \
-      | sed 's/@@.*//' | grep '^lame_ffi_' | sort > "$actual_exports"
+      | sed 's/@@.*//' | grep '^lame_shim_' | sort > "$actual_exports"
     ;;
   windows)
     objdump_tool="${OBJDUMP:-$(command -v llvm-objdump || command -v x86_64-w64-mingw32-objdump)}"
@@ -267,7 +267,7 @@ case "$os" in
     if grep -Ei 'DLL Name:.*(libgcc|libstdc|winpthread|libc\+\+|libunwind)' "$build_root/pe.txt"; then
       echo 'The DLL needs a compiler runtime DLL.' >&2; exit 1;
     fi
-    awk '/\[[[:space:]]*[0-9]+\] lame_ffi_/ {print $NF} /^ +[0-9]+ +0x[0-9a-f]+ +lame_ffi_/ {print $NF}' \
+    awk '/\[[[:space:]]*[0-9]+\] lame_shim_/ {print $NF} /^ +[0-9]+ +0x[0-9a-f]+ +lame_shim_/ {print $NF}' \
       "$build_root/pe.txt" | sort -u > "$actual_exports"
     ;;
 esac

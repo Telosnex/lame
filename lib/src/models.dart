@@ -56,7 +56,7 @@ final class AverageBitrate extends Mp3Bitrate {
 
 /// A failure of the native library or the Wasm module.
 final class LameException implements Exception {
-  /// A failure with the status code of `src/lame_ffi.h`.
+  /// A failure with the status code of `src/lame_shim.h`.
   const LameException(this.status, this.message);
 
   /// The status code: negative. -1 invalid argument, -2 out of memory, -3
@@ -71,7 +71,7 @@ final class LameException implements Exception {
   String toString() => 'LameException($status): $message';
 }
 
-/// The C mode and value of [bitrate] (LAME_FFI_MODE_* in `src/lame_ffi.h`).
+/// The C mode and value of [bitrate] (LAME_SHIM_MODE_* in `src/lame_shim.h`).
 (int mode, int value) cModeOf(Mp3Bitrate bitrate) => switch (bitrate) {
   ConstantBitrate(:final kbps) => (0, kbps),
   VariableBitrate(:final quality) => (1, quality),

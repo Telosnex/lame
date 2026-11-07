@@ -1,5 +1,5 @@
-/// Builds the lame_ffi web runtime: LAME 3.100's libmp3lame and the shim as
-/// one Emscripten ES module, lame_ffi_module.mjs and lame_ffi_module.wasm in
+/// Builds the lame web runtime: LAME 3.100's libmp3lame and the shim as
+/// one Emscripten ES module, lame_module.mjs and lame_module.wasm in
 /// --out.
 ///
 /// The kiln release workflow runs it in the pinned emscripten/emsdk:5.0.0
@@ -7,8 +7,8 @@
 /// for web.json. For a local build, activate Emscripten 5.0.0, or set EMSDK
 /// to it, or put it at ../emsdk. Then install the files with
 ///
-///     dart tool/kiln/build_web.dart --out /tmp/lame_ffi_web
-///     dart run kiln:web install-dev --from /tmp/lame_ffi_web
+///     dart tool/kiln/build_web.dart --out /tmp/lame_web
+///     dart run kiln:web install-dev --from /tmp/lame_web
 library;
 
 import 'dart:io';
@@ -20,19 +20,19 @@ const _usage =
     '  --out             Directory for the two generated files.\n'
     '  --toolchain-file  Gets the Emscripten version.';
 
-const _outputs = ['lame_ffi_module.mjs', 'lame_ffi_module.wasm'];
+const _outputs = ['lame_module.mjs', 'lame_module.wasm'];
 const _emscripten = '5.0.0 (a7c5deabd7c88ba1c38ebe988112256775f944c6)';
 
 const _exportedFunctions = [
   '_malloc',
   '_free',
-  '_lame_ffi_abi_version',
-  '_lame_ffi_build_info',
-  '_lame_ffi_encode_pcm16',
-  '_lame_ffi_buffer_data',
-  '_lame_ffi_buffer_length',
-  '_lame_ffi_buffer_release',
-  '_lame_ffi_error_message',
+  '_lame_shim_abi_version',
+  '_lame_shim_build_info',
+  '_lame_shim_encode_pcm16',
+  '_lame_shim_buffer_data',
+  '_lame_shim_buffer_length',
+  '_lame_shim_buffer_release',
+  '_lame_shim_error_message',
 ];
 
 Future<void> main(List<String> args) async {
@@ -63,7 +63,7 @@ Future<void> main(List<String> args) async {
   // The same pinned archive and the same file list as
   // tool/build_native_artifact.sh.
   await _run(['bash', 'tool/fetch_native_sources.sh'], root, emsdkEnv);
-  final work = await Directory.systemTemp.createTemp('lame_ffi_web');
+  final work = await Directory.systemTemp.createTemp('lame_web');
   try {
     final lame = '${work.path}/lame';
     await Directory(lame).create();
@@ -101,7 +101,7 @@ Future<void> main(List<String> args) async {
         '-I$lame/include',
         '-I$lame/libmp3lame',
         ...sources,
-        '$root/src/lame_ffi.c',
+        '$root/src/lame_shim.c',
         '-lm',
         '--no-entry',
         '-sMODULARIZE=1',

@@ -1,4 +1,4 @@
-lame_ffi
+lame
 
 MIT License
 
@@ -32,7 +32,7 @@ Taylor, Robert Hegemann, Takehiro Tominaga, Gabriel Bouvigne, Albert L.
 Faber, Alexander Leidinger, Naoki Shibata, David Robinson, Glen Sawyer,
 Jonathan Dee, John Dahlstrom, Don Melton and Ron Mayer.
 
-The lame_ffi library includes LAME's libmp3lame, compiled from the official
+The lame library includes LAME's libmp3lame, compiled from the official
 3.100 release (lame-3.100.tar.gz, SHA-256
 ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e) without
 changes. LAME is under the GNU Library General Public License, version 2

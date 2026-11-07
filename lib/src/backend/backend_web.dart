@@ -7,9 +7,9 @@ import '../web_config.dart';
 import '../web_runtime.g.dart';
 import 'backend.dart';
 
-/// Where the lame_ffi build hook installs the worker in a Flutter web app
+/// Where the lame build hook installs the worker in a Flutter web app
 /// (kiln ADR 002 D1).
-const defaultWorkerUrl = 'kiln/lame_ffi/lame_ffi_worker.mjs';
+const defaultWorkerUrl = 'kiln/lame/lame_worker.mjs';
 
 /// [workerUri] resolved against [baseUri], with the query
 /// `v=<webRuntimeVersion>` unless it has a `v` query (kiln ADR 002 D7).
@@ -106,7 +106,7 @@ final class _WebBackend implements LameBackend {
       final error = response.error;
       if (error != null) {
         completer.completeError(
-          LameException(error.status ?? -4, error.message ?? 'lame_ffi error'),
+          LameException(error.status ?? -4, error.message ?? 'lame error'),
         );
       } else {
         completer.complete(response.result!);
@@ -117,10 +117,10 @@ final class _WebBackend implements LameBackend {
       _fail(
         LameException(
           -100,
-          'The lame_ffi worker failed to load from $_workerUrl'
+          'The lame worker failed to load from $_workerUrl'
           '${detail == null || detail.isEmpty ? '' : ': $detail'}. A Flutter '
           'web app gets it from the build hook; other embedders must serve '
-          'package:lame_ffi/web/ and set LameWeb.workerUri.',
+          'package:lame/web/ and set LameWeb.workerUri.',
         ),
       );
     }).toJS;
@@ -177,7 +177,7 @@ extension type _ErrorEvent._(JSObject _) implements JSObject {
   external String? get message;
 }
 
-/// A request of lib/web/lame_ffi_worker.mjs.
+/// A request of lib/web/lame_worker.mjs.
 extension type _Request._(JSObject _) implements JSObject {
   external factory _Request({
     int id,

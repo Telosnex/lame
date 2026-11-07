@@ -1,10 +1,10 @@
-name: lame_ffi
+name: lame
 description: >-
   MP3 encoding with LAME 3.100, the same on every platform. Native through
   FFI, web through WebAssembly. CBR, VBR and ABR, mono or stereo.
 version: 0.1.0
-repository: https://github.com/Telosnex/lame_ffi
-issue_tracker: https://github.com/Telosnex/lame_ffi/issues
+repository: https://github.com/Telosnex/lame
+issue_tracker: https://github.com/Telosnex/lame/issues
 
 environment:
   sdk: ^3.12.2

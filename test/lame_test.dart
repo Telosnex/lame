@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:lame_ffi/lame_ffi.dart';
+import 'package:lame/lame.dart';
 import 'package:test/test.dart';
 
 /// [seconds] of a 440 Hz tone (and 660 Hz on the second channel).
@@ -59,15 +59,15 @@ bool containsAscii(Uint8List bytes, String text, {int limit = 512}) {
 }
 
 void main() {
-  // The test server maps packages/lame_ffi/ to lib/. Native ignores it.
+  // The test server maps packages/lame/ to lib/. Native ignores it.
   setUpAll(
     () => LameWeb.workerUri = Uri.base.resolve(
-      'packages/lame_ffi/web/lame_ffi_worker.mjs?v=test',
+      'packages/lame/web/lame_worker.mjs?v=test',
     ),
   );
 
   test('buildInfo names LAME 3.100', () async {
-    expect(await Lame.buildInfo, 'lame_ffi 1, LAME 3.100');
+    expect(await Lame.buildInfo, 'lame 1, LAME 3.100');
   });
 
   test('CBR stereo at 44.1 kHz', () async {

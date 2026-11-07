@@ -1,4 +1,4 @@
-# lame_ffi
+# lame
 
 MP3 encoding with [LAME](https://lame.sourceforge.io/) 3.100 for Dart and
 Flutter. Native platforms load LAME through `dart:ffi`. Browsers run the same
@@ -13,7 +13,7 @@ to the same bytes.
 ## Usage
 
 ```dart
-import 'package:lame_ffi/lame_ffi.dart';
+import 'package:lame/lame.dart';
 
 final mp3 = await Lame.encode(
   pcm, // Int16List, interleaved for stereo
@@ -58,11 +58,11 @@ Windows targets build on Linux.
 ### Web
 
 A Flutter web build gets the web files from the build hook, in
-`web/kiln/lame_ffi/`. The app needs no change.
+`web/kiln/lame/`. The app needs no change.
 
 Other web apps, for example `dart compile js` sites, must serve this
 package's `lib/web/` directory from the same origin. Then set
-`LameWeb.workerUri` to its `lame_ffi_worker.mjs` before the first encode.
+`LameWeb.workerUri` to its `lame_worker.mjs` before the first encode.
 
 ## License
 
@@ -86,10 +86,10 @@ Flutter shows the package notices in `showLicensePage`.
 dart test
 
 # The web files (Emscripten 5.0.0), then the browser tests:
-dart tool/kiln/build_web.dart --out /tmp/lame_ffi_web
-dart run kiln:web install-dev --from /tmp/lame_ffi_web
+dart tool/kiln/build_web.dart --out /tmp/lame_web
+dart run kiln:web install-dev --from /tmp/lame_web
 dart tool/kiln/test_web.dart
 ```
 
-`src/lame_ffi.h` is the C ABI. After a change to it, run
+`src/lame_shim.h` is the C ABI. After a change to it, run
 `dart run ffigen --config ffigen.yaml`.

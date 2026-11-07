@@ -21,7 +21,7 @@ abstract final class Lame {
         throw error;
       });
 
-  /// The versions of the library, for example `lame_ffi 1, LAME 3.100`.
+  /// The versions of the library, for example `lame 1, LAME 3.100`.
   static Future<String> get buildInfo async => (await _getBackend()).buildInfo;
 
   /// Encodes 16-bit PCM to a complete MP3 file.

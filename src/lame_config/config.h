@@ -1,10 +1,10 @@
-/* The LAME 3.100 build configuration of lame_ffi, in place of the one that
+/* The LAME 3.100 build configuration of lame, in place of the one that
  * LAME's configure script makes. Every target is a C99 compiler with the
  * standard headers: Clang (Apple, Android NDK, llvm-mingw, Emscripten) and GCC
  * (Linux, MinGW-w64). The mpglib decoder, the frontend and the NASM and SSE
  * code are not built. */
-#ifndef LAME_FFI_LAME_CONFIG_H
-#define LAME_FFI_LAME_CONFIG_H
+#ifndef LAME_SHIM_LAME_CONFIG_H
+#define LAME_SHIM_LAME_CONFIG_H
 
 #define STDC_HEADERS 1
 #define HAVE_ERRNO_H 1

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:lame_ffi/lame_ffi.dart';
+import 'package:lame/lame.dart';
 
 /// Encodes two seconds of a stereo tone as a VBR MP3.
 Future<void> main() async {

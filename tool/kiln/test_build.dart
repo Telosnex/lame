@@ -3,7 +3,7 @@
 /// targets that the build runner can run (macos-arm64, linux-x64). On
 /// linux-x64 it also prints the newest glibc requirement.
 ///
-/// It also compiles src/lame_ffi.c with -Werror: the release build compiles
+/// It also compiles src/lame_shim.c with -Werror: the release build compiles
 /// LAME with -w.
 library;
 
@@ -23,7 +23,7 @@ Future<void> main() async {
         ...strict,
         '-fsyntax-only',
         '-I${await _lameInclude()}',
-        'src/lame_ffi.c',
+        'src/lame_shim.c',
       ]);
       await _run('xcrun', [
         'clang',
@@ -32,7 +32,7 @@ Future<void> main() async {
         'arm64',
         '-mmacosx-version-min=12',
         'tool/support/abi_boundary_test.c',
-        '$dir/liblame_ffi.dylib',
+        '$dir/liblame.dylib',
         '-Wl,-rpath,$dir',
         '-o',
         test,
@@ -42,13 +42,13 @@ Future<void> main() async {
         ...strict,
         '-fsyntax-only',
         '-I${await _lameInclude()}',
-        'src/lame_ffi.c',
+        'src/lame_shim.c',
       ]);
       await _run('gcc', [
         ...strict,
         'tool/support/abi_boundary_test.c',
         '-L$dir',
-        '-llame_ffi',
+        '-llame',
         '-lm',
         '-Wl,-rpath,$dir',
         '-o',
@@ -62,7 +62,7 @@ Future<void> main() async {
   if (target == 'linux-x64') {
     final symbols = await _run('objdump', [
       '-T',
-      '$dir/liblame_ffi.so',
+      '$dir/liblame.so',
     ], quiet: true);
     final versions = {
       for (final m in RegExp(r'GLIBC_([0-9.]+)').allMatches(symbols)) m[1]!,

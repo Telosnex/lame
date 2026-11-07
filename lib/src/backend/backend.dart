@@ -4,7 +4,7 @@ import 'dart:typed_data';
 abstract interface class LameBackend {
   String get buildInfo;
 
-  /// Calls `lame_ffi_encode_pcm16` with arguments that Lame.encode checked.
+  /// Calls `lame_shim_encode_pcm16` with arguments that Lame.encode checked.
   Future<Uint8List> encode(
     Int16List pcm, {
     required int frameCount,

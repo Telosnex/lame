@@ -1,15 +1,15 @@
 # Run with `dart run ffigen --config ffigen.yaml`.
 name: LameFfiBindings
 description: |
-  Bindings for `src/lame_ffi.h`.
+  Bindings for `src/lame_shim.h`.
 
   Regenerate bindings with `dart run ffigen --config ffigen.yaml`.
-output: 'lib/lame_ffi_bindings_generated.dart'
+output: 'lib/lame_bindings_generated.dart'
 headers:
   entry-points:
-    - 'src/lame_ffi.h'
+    - 'src/lame_shim.h'
   include-directives:
-    - 'src/lame_ffi.h'
+    - 'src/lame_shim.h'
 ffi-native:
 comments:
   style: any
