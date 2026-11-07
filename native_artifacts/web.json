@@ -1,7 +1,27 @@
 {
   "schema": 1,
-  "webVersion": "7c03aabe3854e660",
+  "sourceKey": "58d170aad7a59d518a15e18b75b841bf870f4238877069f2fbf4ec729a8c755f",
+  "release": "https://github.com/Telosnex/lame/releases/tag/native-58d170aad7a59d51",
+  "runner": "ubuntu-24.04, emscripten/emsdk@sha256:67df07bc59f86685818fa801d340b54e576fe4276cfd3bcfc4da61d564217737",
+  "toolchain": "Emscripten 5.0.0 (a7c5deabd7c88ba1c38ebe988112256775f944c6)",
+  "webVersion": "342dc488a6b5b5a9",
   "files": [
+    {
+      "name": "lame_module.mjs",
+      "sha256": "2046c61e490f384653690cb5f6476a1d212cdfd82320bc68800428cd5af1b4a0",
+      "bytes": 10598,
+      "source": "release",
+      "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/web-lame_module.mjs.gz",
+      "downloadSha256": "1955d79e8c6d73a20da0db373ae61db1fad7f6afa31ba96ecda7860d8e529ef0"
+    },
+    {
+      "name": "lame_module.wasm",
+      "sha256": "7a0fd281799b6633c61f6149af22010765f7684115041c7df0c9b260ff8a445c",
+      "bytes": 218246,
+      "source": "release",
+      "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/web-lame_module.wasm.gz",
+      "downloadSha256": "bdb60b8ee645ffd53f524f1d2ab161556d22594511d61ea7523c54dca6b2f396"
+    },
     {
       "name": "lame_worker.mjs",
       "sha256": "93da4b5c3d5dcf5285283abece25ffa5701b6b4447ad7a292c6c8eaa368bb099",

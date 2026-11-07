@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "sourceKey": "58d170aad7a59d518a15e18b75b841bf870f4238877069f2fbf4ec729a8c755f",
+  "release": "https://github.com/Telosnex/lame/releases/tag/native-58d170aad7a59d51",
+  "targets": {
+    "android-arm": {
+      "runner": "ubuntu22 20261101.347.1",
+      "toolchain": "Android NDK 28.2.13676358, cmake version 3.31.6",
+      "minOSVersion": 24,
+      "files": [
+        {
+          "name": "liblame.so",
+          "sha256": "174cb7d1f58b92b1d74806d276eff75aa6e8494863fcd27d3da333ba3fe2e5a2",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/android-arm-liblame.so.gz",
+          "downloadSha256": "6d9fdf696d3d96ae34f3f55f97169f007e44b64cb1e3967a87367e3632a9be8b",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "android-arm64": {
+      "runner": "ubuntu22 20261101.347.1",
+      "toolchain": "Android NDK 28.2.13676358, cmake version 3.31.6",
+      "minOSVersion": 24,
+      "files": [
+        {
+          "name": "liblame.so",
+          "sha256": "db11f81544f77372d8efb05030cc63ed7fdce309aa0b34fce05929623cf4efef",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/android-arm64-liblame.so.gz",
+          "downloadSha256": "f3856c3d378a62b1389a5999df3ee39e13bc4d14c5683f7292ea13abb44896ee",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "android-x64": {
+      "runner": "ubuntu22 20261101.347.1",
+      "toolchain": "Android NDK 28.2.13676358, cmake version 3.31.6",
+      "minOSVersion": 24,
+      "files": [
+        {
+          "name": "liblame.so",
+          "sha256": "3500b5f08c38bf43be4a028059d42459255340390a3c9ea14092262427d3bf9e",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/android-x64-liblame.so.gz",
+          "downloadSha256": "62247e6618729b3d930e271ba2b4db0870a3f5624acbf348c472aedadae5a9b8",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "ios-arm64-iphoneos": {
+      "runner": "macos15 20261104.0514.1",
+      "toolchain": "Xcode 16.4, cmake version 4.4.5",
+      "minOSVersion": 13,
+      "files": [
+        {
+          "name": "liblame.dylib",
+          "sha256": "755d183a8c742f6792f820c35f8f21bac33a4bd503a0ae2c8dd3450812ecf824",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/ios-arm64-iphoneos-liblame.dylib.gz",
+          "downloadSha256": "7237b83e113f4bedc53a02f4f4f84e83d65638543c8f51a22de78f2c0ac65e47",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "ios-arm64-iphonesimulator": {
+      "runner": "macos15 20261104.0514.1",
+      "toolchain": "Xcode 16.4, cmake version 4.4.5",
+      "minOSVersion": 13,
+      "files": [
+        {
+          "name": "liblame.dylib",
+          "sha256": "739f1826cabe4e63d3deba8b119434a333bee21aa778d03a6c30d1aa79e33378",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/ios-arm64-iphonesimulator-liblame.dylib.gz",
+          "downloadSha256": "959ba50735198682115abdd1b1348595ddf381240dd6fd2a1a121829af956aa2",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "ios-x64-iphonesimulator": {
+      "runner": "macos15 20261104.0514.1",
+      "toolchain": "Xcode 16.4, cmake version 4.4.5",
+      "minOSVersion": 13,
+      "files": [
+        {
+          "name": "liblame.dylib",
+          "sha256": "3e0064b26c323886dd3b66f953d384a770d76d45f5a3127ab15b4230c4487408",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/ios-x64-iphonesimulator-liblame.dylib.gz",
+          "downloadSha256": "6cbf4807305668cac62b09432996abb8de5ef6d811542ddab318cd8f2c96ed41",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "linux-arm64": {
+      "runner": "ubuntu-22.04, Debian 11 container",
+      "toolchain": "Debian 11.11, aarch64-linux-gnu-gcc (Debian 10.2.1-6) 10.2.1 20210110",
+      "files": [
+        {
+          "name": "liblame.so",
+          "sha256": "99e93967a6636c269d93e0f48921ccd5b77267a9571e9a41f8bda072fffea9a2",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/linux-arm64-liblame.so.gz",
+          "downloadSha256": "bf9504548af40b9731845de31f230f908f2ee7aff8c40202b09fb18e651eb69e",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "linux-x64": {
+      "runner": "ubuntu-22.04, Debian 11 container",
+      "toolchain": "Debian 11.11, gcc (Debian 10.2.1-6) 10.2.1 20210110",
+      "files": [
+        {
+          "name": "liblame.so",
+          "sha256": "d687c777d78d619a24047ed7e3751f740bbe4b1328ce836a32780f15d6adbdd1",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/linux-x64-liblame.so.gz",
+          "downloadSha256": "cbb5d30785a320569d2481e31064def490e472dd9d57a0393549ba5ac15a0b96",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "macos-arm64": {
+      "runner": "macos15 20261104.0514.1",
+      "toolchain": "Xcode 16.4, cmake version 4.4.5",
+      "minOSVersion": 12,
+      "files": [
+        {
+          "name": "liblame.dylib",
+          "sha256": "4acf1d93180e0ed92cba18b48381aeeda79a151e7a07318bf5bcbf6a722d4ec3",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/macos-arm64-liblame.dylib.gz",
+          "downloadSha256": "fdfde24d87da25bd7f26d0731c677231df625fa0c9a0bffa1f350c71772ced32",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "macos-x64": {
+      "runner": "macos15 20261104.0514.1",
+      "toolchain": "Xcode 16.4, cmake version 4.4.5",
+      "minOSVersion": 12,
+      "files": [
+        {
+          "name": "liblame.dylib",
+          "sha256": "65e194618b35d5132d2ed4c51f3199e18189ce6c5667d35cf09d6555e305ce0c",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/macos-x64-liblame.dylib.gz",
+          "downloadSha256": "2ee96b111491e3b6b3c9b4c34d4388901c4bb144f775667f2a8026021ead711f",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "windows-arm64": {
+      "runner": "ubuntu-22.04, Debian 12 container",
+      "toolchain": "Debian 12.15, llvm-mingw 20260922, clang version 23.1.2 (https://github.com/llvm/llvm-project.git 85ac560262434c9ccfc0c183ec22d4138ed647fb)",
+      "files": [
+        {
+          "name": "lame.dll",
+          "sha256": "14d8cd296a9728b7eea36f14c64af215d6574a1fc62379c8de229dc786df1ceb",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/windows-arm64-lame.dll.gz",
+          "downloadSha256": "279d048f630c42b6780e0efed0c3ef99eb38bbddc3019206303291f887632e20",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    },
+    "windows-x64": {
+      "runner": "ubuntu-22.04, Debian 11 container",
+      "toolchain": "Debian 11.11, x86_64-w64-mingw32-gcc (GCC) 10-win32 20210110",
+      "files": [
+        {
+          "name": "lame.dll",
+          "sha256": "d28de6e34a5c8f68c7c8e0d19b4914c5e57c39aba0ee1177c2108a06a4f6015a",
+          "url": "https://github.com/Telosnex/lame/releases/download/native-58d170aad7a59d51/windows-x64-lame.dll.gz",
+          "downloadSha256": "2fb3abf16e1820a2325fe644f2aa3dc3158ef8b63c748185f90f2a30ab0d1770",
+          "delivery": "bundle",
+          "asset": "lame_bindings_generated.dart"
+        }
+      ]
+    }
+  }
+}
