@@ -12,7 +12,7 @@ packages=(build-essential ca-certificates curl xz-utils)
 case "$target" in
   linux-x64|windows-arm64) ;;
   linux-arm64)
-    packages+=(gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu)
+    packages+=(gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross)
     ;;
   windows-x64)
     packages+=(gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64)
