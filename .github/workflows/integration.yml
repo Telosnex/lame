@@ -114,3 +114,53 @@ jobs:
       BROWSER: safari
       COMPILER: dart2js
     steps: *web_steps
+
+  # The C ABI test of tool/support/abi_boundary_test.c, on the released
+  # library: it checks the exports and the encoded bytes.
+  ios:
+    name: iOS ARM64 simulator
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: Telosnex/telosnex_ci_tools/actions/setup-flutter@4a798518378fb0c362ebe42940227560e6b4ecde # v0.5.8
+      - run: dart pub get
+      - uses: Telosnex/telosnex_ci_tools/actions/ios-simulator-boot@4a798518378fb0c362ebe42940227560e6b4ecde # v0.5.8
+      # The script writes no log file: tee keeps its output for the upload.
+      # bash (the workflow default) runs with pipefail, so a failure stays one.
+      - name: Simulator test (tool/test_ios_simulator_artifact.sh)
+        run: tool/test_ios_simulator_artifact.sh 2>&1 | tee "$RUNNER_TEMP/ios-simulator-test.log"
+      - name: Upload the simulator logs
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ios-simulator-logs
+          path: ${{ runner.temp }}/ios-simulator-test.log
+          if-no-files-found: ignore
+
+  android:
+    name: Android x64 emulator
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: Telosnex/telosnex_ci_tools/actions/setup-flutter@4a798518378fb0c362ebe42940227560e6b4ecde # v0.5.8
+      - run: dart pub get
+      - id: emulator
+        uses: Telosnex/telosnex_ci_tools/actions/android-emulator@4a798518378fb0c362ebe42940227560e6b4ecde # v0.5.8
+        with:
+          api-level: '36'
+      - run: tool/test_android_artifact.sh
+      - name: Upload the emulator logs
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: android-emulator-logs
+          path: |
+            ${{ steps.emulator.outputs.log }}
+            ${{ steps.emulator.outputs.logcat }}
+          if-no-files-found: ignore
