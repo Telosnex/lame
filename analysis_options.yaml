@@ -4,3 +4,9 @@ analyzer:
   exclude:
     - lib/lame_bindings_generated.dart
     - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
