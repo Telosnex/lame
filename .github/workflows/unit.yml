@@ -30,6 +30,9 @@ jobs:
       - run: dart pub get
       - run: dart format --output=none --set-exit-if-changed lib test tool hook example
       - run: dart analyze --fatal-infos
+      # Authenticated: anonymous GitHub API calls share a small rate limit.
       - run: dart run kiln:check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       # The hook builds the library from source until the first release.
       - run: dart test -r expanded
